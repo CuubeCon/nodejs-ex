@@ -18,7 +18,7 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
  *  Select Debug Mode via env variable
  */
 let debug = process.env.debug === "true";
-console.log("Test123: " + debug);
+console.log("Test13: " + debug);
 
 /**
  *
