@@ -14,6 +14,66 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
+/**
+ *  Select Debug Mode via env variable
+ */
+let debug = process.env.debug === "true";
+console.log("Test: " + debug);
+
+/**
+ *
+ * TWITCH BOT SECTION
+ *
+ */
+// ES6 syntax
+let TwitchJs = require('twitch-js').default;
+
+// Define configuration options:
+let opts = {
+        identity: {
+            username: 'cubeconlp',
+                password: 'oauth:bhvq4jhuy4ymacztewuarm0drttz91'
+                    },
+        channels: [
+            '#salz0r_tv',
+           '#cubeconlp'
+        ]
+};
+
+const token = 'oauth:bhvq4jhuy4ymacztewuarm0drttz91';
+const username = 'cubeconlp';
+const { api, chat , chatConstants} = new TwitchJs({ token, username, log: { level: 'warn' } });
+//const channel = '#salz0r_tv';
+
+chat.connect().then(globalUserState => {
+    // Do stuff ...
+    const channels = ['#noway4u_sir', '#ratirl'];
+
+    Promise.all(channels.map(channel => {
+        return chat.join(channel);
+    })).then(channelStates => {
+      // Listen to all messages from #noway4u_sir only
+    
+      chat.on('#noway4u_sir', message => {
+        // Do stuff with message ...
+      });
+    
+      // Listen to private messages from #noway4u_sir and #ratirl
+      chat.on('PRIVMSG', privateMessage => {
+        // Do stuff with privateMessage ...
+      });
+    
+      // Listen to private messages from #noway4u_sir only
+      chat.on('PRIVMSG/#noway4u_sir', privateMessage => {
+        // Do stuff with privateMessage ...
+      });
+    
+      // Listen to all private messages from #ratirl only
+      chat.on('PRIVMSG/#ratirl', privateMessage => {
+        // Do stuff with privateMessage ...
+      });
+    });
+});
 
 if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
   var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
