@@ -47,7 +47,7 @@ const { api, chat , chatConstants} = new TwitchJs({ token, username, log: { leve
 
 chat.connect().then(globalUserState => {
     // Do stuff ...
-    const channels = ['#noway4u_sir', '#ratirl'];
+    const channels = ['#noway4u_sir', '#ratirl', '#the8bitdrummer', '#cxlibri'];
 
     Promise.all(channels.map(channel => {
         return chat.join(channel);
